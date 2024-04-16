@@ -21,7 +21,8 @@ class SplashActivity : AppCompatActivity() {
             insets
         }
 
-        val appOpenAdsManager = AppOpenAdsManager(this,"ca-app-pub-3940256099942544/3419835294",10000, object :AppOpenAdsManager.AppOpenAdsListener{
+        val appOpenAdsManager = AppOpenAdsManager(this,"ca-app-pub-3940256099942544/3419835294",
+            timeOut = 10000, object :AppOpenAdsManager.AppOpenAdsListener{
             override fun onAdsClose() {
                 Log.d("TAG ===", "onAdsClose: ")
                 startActivity(Intent(this@SplashActivity, MainActivity::class.java))

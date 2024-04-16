@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 
 class AppOpenAdsManager(
     private val activity: Activity,
-    val appOpen: String,
+    val appOpenID: String,
     val timeOut: Long,
     val appOpenAdsListener: AppOpenAdsListener
 ) {
@@ -43,7 +43,7 @@ class AppOpenAdsManager(
         get() = appOpenAd != null
 
     fun loadAndShowAoA() {
-        var idAoa = appOpen
+        var idAoa = appOpenID
         if (AdmobManager.isAdsTest) {
             idAoa = ID_TEST
         }
