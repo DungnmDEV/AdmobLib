@@ -5,7 +5,7 @@ import com.google.android.gms.ads.AdView
 
 interface BannerCallBack {
     fun onAdLoaded()
-    fun onAdFailedToLoad(message: String)
+    fun onAdFailedToLoad(error: String)
     fun onAdClicked()
-    fun onPaid(adValue: AdValue, mAdView: AdView)
+    fun onAdsPaid(adValue: AdValue, mAdView: AdView)
 }

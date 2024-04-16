@@ -1,5 +1,6 @@
 package com.dungvnhh98.percas.studio.admoblib;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.app.Dialog;
@@ -29,10 +30,12 @@ import com.google.android.gms.ads.appopen.AppOpenAd;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class AppResumeAdsManager implements Application.ActivityLifecycleCallbacks, LifecycleObserver {
     private static final String TAG = "TAG === ADS ON RESUME";
     private static final String AD_UNIT_ID = "ca-app-pub-3940256099942544/9257395921";
+    @SuppressLint("StaticFieldLeak")
     private static volatile AppResumeAdsManager instance;
 
     private AppOpenAd appOpenAd = null;
@@ -84,7 +87,7 @@ public class AppResumeAdsManager implements Application.ActivityLifecycleCallbac
                 AppOpenAd.APP_OPEN_AD_ORIENTATION_PORTRAIT,
                 new AppOpenAd.AppOpenAdLoadCallback() {
                     @Override
-                    public void onAdLoaded(AppOpenAd ad) {
+                    public void onAdLoaded(@NonNull AppOpenAd ad) {
                         // khi load thành công ads
                         Log.d(TAG, "Ad was loaded.");
                         appOpenAd = ad;
@@ -94,7 +97,7 @@ public class AppResumeAdsManager implements Application.ActivityLifecycleCallbac
                     }
 
                     @Override
-                    public void onAdFailedToLoad(LoadAdError loadAdError) {
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
                         // khi load fail
                         Log.d(TAG, loadAdError.getMessage());
                         isLoadingAd = false;
@@ -102,14 +105,14 @@ public class AppResumeAdsManager implements Application.ActivityLifecycleCallbac
                 });
     }
 
-    private boolean wasLoadTimeLessThanNHoursAgo(long loadTime, long numHours) {
+    private boolean wasLoadTimeLessThanNHoursAgo(long loadTime) {
         long dateDifference = (new Date()).getTime() - loadTime;
         long numMilliSecondsPerHour = 3600000;
-        return (dateDifference < (numMilliSecondsPerHour * numHours));
+        return (dateDifference < (numMilliSecondsPerHour * (long) 4));
     }
 
     private boolean isAdAvailable() {
-        return appOpenAd != null && wasLoadTimeLessThanNHoursAgo(loadTime, 4);
+        return appOpenAd != null && wasLoadTimeLessThanNHoursAgo(loadTime);
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
@@ -119,7 +122,7 @@ public class AppResumeAdsManager implements Application.ActivityLifecycleCallbac
         if (currentActivity == null) {
             return;
         }
-        if (AdmobManager.INSTANCE.isAdsShowing()) {
+        if (AdmobManager.INSTANCE.isOverlayAdShowing()) {
             return;
         }
         if (!AdmobManager.INSTANCE.isEnableAds()) {
@@ -164,7 +167,7 @@ public class AppResumeAdsManager implements Application.ActivityLifecycleCallbac
                         }
 
                         @Override
-                        public void onAdFailedToShowFullScreenContent(AdError adError) {
+                        public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
                             isLoadingAd = false;
                             Log.d(TAG, "onAdShowedFullScreenContent: Show false");
                             try {
@@ -210,7 +213,7 @@ public class AppResumeAdsManager implements Application.ActivityLifecycleCallbac
         dialogFullScreen.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialogFullScreen.setContentView(R.layout.dialog_full_screen_onresume);
         dialogFullScreen.setCancelable(false);
-        dialogFullScreen.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        Objects.requireNonNull(dialogFullScreen.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         dialogFullScreen.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         try {
             if (!currentActivity.isFinishing() && dialogFullScreen != null && !dialogFullScreen.isShowing()) {

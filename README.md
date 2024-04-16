@@ -70,7 +70,7 @@ class MyApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         AdmobManager.initAdmob(this, timeOut = 10000, isAdsTest = true, isEnableAds = true)
-        AppResumeAdsManager.getInstance().init(/* application = */ this,/* appOnresmeAdsId = */ "")
+        AppResumeAdsManager.getInstance().init(this, appOnresmeAdsId})
     }
 }
 ```
@@ -99,16 +99,16 @@ val appOpenAdsManager = AppOpenAdsManager(this,{yourAppOpenAdsID} ,timeout = 100
 
 - Banner Ads:
 ```bash
-fun showAdBanner(activity: Activity, bannerAdsID: String, view: ViewGroup, line: View) {
-        if (isNetworkConnected(activity)) {
-            AdmobManager.loadBanner(this, bannerAdsID, view, object : BannerCallBack {
+fun showAdBanner(activity: Activity, bannerAdsID: String, viewBanner: ViewGroup, line: View) {
+        if (activity.isNetworkConnected()) {
+            AdmobManager.loadBanner(this, bannerAdsID, viewBanner, object : BannerCallBack {
                 override fun onAdLoaded() {
-                    view.visible()
+                    viewBanner.visible()
                     line.visible()
                 }
 
                 override fun onAdFailedToLoad(message: String) {
-                    view.gone()
+                    viewBanner.gone()
                     line.gone()
                 }
 
@@ -120,7 +120,7 @@ fun showAdBanner(activity: Activity, bannerAdsID: String, view: ViewGroup, line:
 
             })
         } else {
-             view.gone()
+             viewBanner.gone()
 	     line.gone()
         }
     }
@@ -143,6 +143,6 @@ fun showAdBanner(activity: Activity, bannerAdsID: String, view: ViewGroup, line:
 	ViewGroup.actionAnimation()
 
 \\ For example:
-	textView.gone()
 	viewContainer.actionAnimation() // viewContainer is the view containing the textview
+	textView.gone()
 ```

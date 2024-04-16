@@ -12,9 +12,9 @@ import android.view.Window
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.airbnb.lottie.LottieAnimationView
+import com.dungvnhh98.percas.studio.admoblib.callback.AppOpenAdsListener
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdValue
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.appopen.AppOpenAd
@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 
 class AppOpenAdsManager(
     private val activity: Activity,
-    val appOpenID: String,
+    private val appOpenID: String,
     val timeOut: Long,
     val appOpenAdsListener: AppOpenAdsListener
 ) {
@@ -184,7 +184,7 @@ class AppOpenAdsManager(
         }
     }
 
-    fun onAoaDestroyed() {
+    private fun onAoaDestroyed() {
         isShowingAd = true
         isLoading = false
         try {
@@ -196,10 +196,5 @@ class AppOpenAdsManager(
         }
     }
 
-    interface AppOpenAdsListener {
-        fun onAdsClose()
-        fun onAdsFailed(message: String)
-        fun onAdPaid(adValue: AdValue, adUnitAds: String)
-    }
 
 }
