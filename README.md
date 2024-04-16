@@ -62,7 +62,7 @@ class MyApplication: Application() {
 Now you can use Admob Library
 
 
--AppResumeAdsManager:
+- AppResumeAdsManager:
 ```bash
 //Init AppResumeAdsManager in MyApplication, if your use test Ads ID,you can leave the appOnresmeAdsId blank
 
@@ -74,12 +74,12 @@ class MyApplication: Application() {
     }
 }
 ```
--AppOpenAdsManager:
+- AppOpenAdsManager:
 ```bash
 //Use AppOpenAdsManager in SplashScreen, if your use test Ads ID,you can leave the yourAppOpenAdsID blank
 
 
-val appOpenAdsManager = AppOpenAdsManager(this,{yourAppOpenAdsID} ,10000, object :AppOpenAdsManager.AppOpenAdsListener{
+val appOpenAdsManager = AppOpenAdsManager(this,{yourAppOpenAdsID} ,timeout = 10000, object :AppOpenAdsManager.AppOpenAdsListener{
             override fun onAdsClose() {
                 Log.d("TAG ===", "onAdsClose: ")
                 startActivity(Intent(this@SplashActivity, MainActivity::class.java))
@@ -97,3 +97,52 @@ val appOpenAdsManager = AppOpenAdsManager(this,{yourAppOpenAdsID} ,10000, object
         appOpenAdsManager.loadAndShowAoA()
 ```
 
+- Banner Ads:
+```bash
+fun showAdBanner(activity: Activity, bannerAdsID: String, view: ViewGroup, line: View) {
+        if (isNetworkConnected(activity)) {
+            AdmobManager.loadBanner(this, bannerAdsID, view, object : BannerCallBack {
+                override fun onAdLoaded() {
+                    view.visible()
+                    line.visible()
+                }
+
+                override fun onAdFailedToLoad(message: String) {
+                    view.gone()
+                    line.gone()
+                }
+
+                override fun onAdClicked() {
+                }
+
+                override fun onPaid(adValue: AdValue, mAdView: AdView) {
+                }
+
+            })
+        } else {
+             view.gone()
+	     line.gone()
+        }
+    }
+
+```
+
+
+- Other extention:
+```bash
+\\ Visible view
+	View.visible()
+
+\\ Invisible view
+	View.invisible()
+
+\\ Gone view
+	View.gone()
+
+\\ Add animation when change layout
+	ViewGroup.actionAnimation()
+
+\\ For example:
+	textView.gone()
+	viewContainer.actionAnimation() // viewContainer is the view containing the textview
+```
