@@ -17,8 +17,8 @@ object ViewControl {
         visibility = View.INVISIBLE
     }
 
-    fun Context.actionAnimation(viewGroup: ViewGroup){
-        TransitionManager.beginDelayedTransition(viewGroup)
+    fun ViewGroup.actionAnimation(){
+        TransitionManager.beginDelayedTransition(this)
     }
 
 

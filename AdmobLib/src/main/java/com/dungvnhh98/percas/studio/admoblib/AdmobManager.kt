@@ -77,8 +77,8 @@ object AdmobManager {
     }
 
     @JvmStatic
-    fun isNetworkConnected(context: Context): Boolean {
-        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    fun Context.isNetworkConnected(): Boolean {
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return cm.activeNetworkInfo != null && cm.activeNetworkInfo!!.isConnected
     }
 
