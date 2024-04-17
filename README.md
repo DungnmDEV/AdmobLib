@@ -101,21 +101,21 @@ val appOpenAdsManager = AppOpenAdsManager(this,{yourAppOpenAdsID} ,timeout = 100
 ```bash
 fun showAdBanner(activity: Activity, bannerAdsID: String, viewBanner: ViewGroup, line: View) {
         if (activity.isNetworkConnected()) {
-            AdmobManager.loadBanner(this, bannerAdsID, viewBanner, object : BannerCallBack {
+            AdmobManager.loadAndShowBanner(this, bannerAdsID, viewBanner, object : BannerCallBack {
                 override fun onAdLoaded() {
-                    viewBanner.visible()
-                    line.visible()
+                    binding.flBanner.visible()
+                    binding.line.visible()
                 }
 
                 override fun onAdFailedToLoad(message: String) {
-                    viewBanner.gone()
-                    line.gone()
+                    binding.flBanner.gone()
+                    binding.line.gone()
                 }
 
                 override fun onAdClicked() {
                 }
 
-                override fun onPaid(adValue: AdValue, mAdView: AdView) {
+                override fun onAdsPaid(adValue: AdValue, mAdView: AdView) {
                 }
 
             })
@@ -126,7 +126,54 @@ fun showAdBanner(activity: Activity, bannerAdsID: String, viewBanner: ViewGroup,
     }
 
 ```
+- Native Ads:
+```bash
+// Load Native Ads before show it
+// Use NativeAdHolder to hold Native ads id
 
+val nativeHolder = NativeAdHolder(idNativeAd)
+
+AdmobManager.loadNativeAds(this, nativeHolder, object : LoadNativeCallback {
+            override fun onLoadedAndGetNativeAd(ad: NativeAd?) {
+                Log.d(TAG, "onLoadedAndGetNativeAd: ")
+            }
+
+            override fun onAdsLoadFail(error: String?) {
+                Log.d(TAG, "onAdFail: "+error)
+            }
+
+            override fun onAdPaid(adValue: AdValue?, adUnitAds: String?) {
+            }
+
+        })
+
+// After load Native Ad, you can show it on a ViewGroup
+fun showNativeMedium(activity: Activity, nativeHolder: NativeAdHolder, viewNativeAd: ViewGroup,
+        layout: Int,
+        nativeSize: NativeAdsSize,
+        callback: ShowNativeCallBack) {
+
+        AdmobManager.showNativeAds(
+            activity,
+            nativeHolder,
+            viewNativeAd,
+           layout,
+            nativeSize,
+            object :
+                ShowNativeCallBack {
+                override fun onAdsNativeShowed() {
+                }
+
+                override fun onAdsNativeShowFailed(massage: String) {
+                }
+
+                override fun onAdsNativePaid(adValue: AdValue, adUnitAds: String) {
+                }
+
+            })
+    }
+
+```
 
 - Other extention:
 ```bash
