@@ -1,14 +1,12 @@
 <com.google.android.gms.ads.nativead.NativeAdView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/bg_border_ads"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gnt_outline_shape"
             android:minHeight="50dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -69,7 +67,7 @@
                     android:maxLines="2"
                     android:ellipsize="end"
                     android:textStyle="bold"
-                    android:textColor="@color/gnt_black"
+                    android:textColor="#000000"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toTopOf="@+id/textView2"
                     app:layout_constraintStart_toEndOf="@+id/cardIcon"
@@ -81,13 +79,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:background="@drawable/gnt_rounded_corners_shape"
+                    android:background="#4D000000"
                     android:paddingStart="8dp"
                     android:paddingTop="4dp"
                     android:paddingEnd="8dp"
                     android:paddingBottom="4dp"
                     android:text="Ad"
-                    android:textColor="@color/gnt_ad_green"
+                    android:textColor="#000000"
                     android:textSize="10sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/ad_body"
@@ -103,7 +101,7 @@
                     android:text="Test Ads to you"
                     android:maxLines="2"
                     tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
-                    android:textColor="@color/gnt_black"
+                    android:textColor="#000000"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -120,10 +118,9 @@
                 android:layout_marginBottom="8dp"
                 android:elevation="8dp"
                 android:text="Install"
-                android:textColor="@color/gnt_white"
+                android:textColor="#000000"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:background="@color/gnt_blue"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
