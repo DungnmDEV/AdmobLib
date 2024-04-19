@@ -65,7 +65,7 @@ public class AppResumeAdsManager implements Application.ActivityLifecycleCallbac
     public void init(Application application, String appOnresmeAdsId) {
         this.mApplication = application;
         this.mAdRequest = new AdRequest.Builder().setHttpTimeoutMillis(5000).build();
-        this.adsOnResumeId = AdmobManager.INSTANCE.isAdsTest() ? AD_UNIT_ID : appOnresmeAdsId;
+        this.adsOnResumeId = AdmobManager.INSTANCE.isTestAdmob() ? AD_UNIT_ID : appOnresmeAdsId;
         this.mApplication.registerActivityLifecycleCallbacks(this);
         ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
         if (!isAdAvailable()) {
@@ -125,7 +125,7 @@ public class AppResumeAdsManager implements Application.ActivityLifecycleCallbac
         if (AdmobManager.INSTANCE.isOverlayAdShowing()) {
             return;
         }
-        if (!AdmobManager.INSTANCE.isEnableAds()) {
+        if (!AdmobManager.INSTANCE.isEnableAd()) {
             return;
         }
         if (!isAppResumeEnabled) {

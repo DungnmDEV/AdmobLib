@@ -1,10 +1,13 @@
 package com.dungvnhh98.percas.studio.example
 
-import com.vapp.admoblibrary.ads.model.InterAdHolder
-import com.vapp.admoblibrary.ads.model.NativeAdHolder
+import com.dungvnhh98.percas.studio.admoblib.model.InterAdHolder
+import com.dungvnhh98.percas.studio.admoblib.model.NativeAdHolder
+import com.dungvnhh98.percas.studio.admoblib.model.RewardInterHolder
 
 object Ads {
     val nativeHolder = NativeAdHolder("")
     val nativeHolder2 = NativeAdHolder("")
+    val nativeHolder3 = NativeAdHolder("")
     val interholder = InterAdHolder("")
+    val interRewardHolder = RewardInterHolder("")
 }

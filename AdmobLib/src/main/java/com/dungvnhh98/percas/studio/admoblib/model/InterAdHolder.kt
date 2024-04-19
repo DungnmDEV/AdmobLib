@@ -1,4 +1,4 @@
-package com.vapp.admoblibrary.ads.model
+package com.dungvnhh98.percas.studio.admoblib.model
 
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.ads.interstitial.InterstitialAd

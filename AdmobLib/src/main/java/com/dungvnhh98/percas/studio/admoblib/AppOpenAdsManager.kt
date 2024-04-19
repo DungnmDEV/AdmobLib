@@ -12,9 +12,9 @@ import android.view.Window
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.airbnb.lottie.LottieAnimationView
-import com.dungvnhh98.percas.studio.admoblib.callback.AppOpenAdsListener
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdValue
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.appopen.AppOpenAd
@@ -27,14 +27,14 @@ class AppOpenAdsManager(
     private val activity: Activity,
     private val appOpenID: String,
     val timeOut: Long,
-    val appOpenAdsListener: AppOpenAdsListener
+    val appOpenAdsListener: AppOpenAdListener
 ) {
     private var appOpenAd: AppOpenAd? = null
     private val ID_TEST = "ca-app-pub-3940256099942544/9257395921"
     var isShowingAd = true
     private var isLoading = true
     private var dialogFullScreen: Dialog? = null
-    private val TAG = "TAG === APP OPEN ADS"
+    private val TAG = "APP OPEN ADS"
     private var isStart = true
     private val adRequest: AdRequest
         get() = AdRequest.Builder().build()
@@ -44,12 +44,12 @@ class AppOpenAdsManager(
 
     fun loadAndShowAoA() {
         var idAoa = appOpenID
-        if (AdmobManager.isAdsTest) {
+        if (AdmobManager.isTestAdmob) {
             idAoa = ID_TEST
         }
 
-        if (!AdmobManager.isEnableAds) {
-            appOpenAdsListener.onAdsFailed("isShowAds false")
+        if (!AdmobManager.isEnableAd) {
+            appOpenAdsListener.onAdFail("isShowAds false")
             return
         }
         //Check timeout show inter
@@ -59,13 +59,13 @@ class AppOpenAdsManager(
                 isStart = false
                 isLoading = false
                 onAoaDestroyed()
-                appOpenAdsListener.onAdsFailed("Time out")
+                appOpenAdsListener.onAdFail("Time out")
                 Log.d(TAG, "TimeOut")
             }
         }
         if (isAdAvailable) {
             job.cancel()
-            appOpenAdsListener.onAdsFailed("isAdAvailable true")
+            appOpenAdsListener.onAdFail("isAdAvailable true")
             return
         } else {
             Log.d(TAG, "fetching... ")
@@ -77,7 +77,7 @@ class AppOpenAdsManager(
                     super.onAdFailedToLoad(p0)
                     if (isStart) {
                         isStart = false
-                        appOpenAdsListener.onAdsFailed(p0.message)
+                        appOpenAdsListener.onAdFail(p0.message)
                     }
                     job.cancel()
                     Log.d(TAG, "onAppOpenAdFailedToLoad: $p0")
@@ -117,7 +117,7 @@ class AppOpenAdsManager(
                         Log.d(TAG, "Dismiss... ")
                         if (isStart) {
                             isStart = false
-                            appOpenAdsListener.onAdsClose()
+                            appOpenAdsListener.onAdClose()
                         }
                         if (AppResumeAdsManager.getInstance().isInitialized) {
                             AppResumeAdsManager.getInstance().isAppResumeEnabled = true
@@ -132,7 +132,7 @@ class AppOpenAdsManager(
                         isShowingAd = true
                         if (isStart) {
                             isStart = false
-                            appOpenAdsListener.onAdsFailed(p0.message)
+                            appOpenAdsListener.onAdFail(p0.message)
                             Log.d(TAG, "Failed... $p0")
                         }
                         if (AppResumeAdsManager.getInstance().isInitialized) {
@@ -175,12 +175,12 @@ class AppOpenAdsManager(
                         setOnPaidEventListener { appOpenAdsListener.onAdPaid(it, adUnitId) }
                         show(activity)
                     } else {
-                        appOpenAdsListener.onAdsFailed("AOA can't show")
+                        appOpenAdsListener.onAdFail("AOA can't show")
                     }
                 }, 800)
             }
         } else {
-            appOpenAdsListener.onAdsFailed("AOA can't show in background!")
+            appOpenAdsListener.onAdFail("AOA can't show in background!")
         }
     }
 
@@ -196,5 +196,9 @@ class AppOpenAdsManager(
         }
     }
 
-
+    interface AppOpenAdListener {
+        fun onAdClose()
+        fun onAdFail(error: String)
+        fun onAdPaid(adValue: AdValue, adUnitAds: String)
+    }
 }
