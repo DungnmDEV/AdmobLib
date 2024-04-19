@@ -7,7 +7,7 @@ import com.dungvnhh98.percas.studio.admoblib.AppResumeAdsManager
 class MyApplication: Application() {
     override fun onCreate() {
         super.onCreate()
-        AdmobManager.initAdmob(this, timeOut = 10000, isAdsTest = true, isEnableAds = true)
+        AdmobManager.initAdmob(this, timeOut = 10000, isTestAd = true, isEnableAd = true)
         AppResumeAdsManager.getInstance().init(/* application = */ this,/* appOnresmeAdsId = */ "")
     }
 }
