@@ -6,102 +6,145 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/btn_banner"
-        android:text="Show Banner"/>
-    <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btn_banner"
-        android:id="@+id/btn_nativeMedium"
-        android:text="Show Native Medium"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btn_nativeMedium"
-        android:id="@+id/btn_nativeSmall"
-        android:text="Show Native Small"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btn_nativeSmall"
-        android:id="@+id/btn_loadandshow"
-        android:text="Load And Show Native Medium"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btn_loadandshow"
-        android:id="@+id/btn_inter"
-        android:text="Show Interstitial Ad"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btn_inter"
-        android:id="@+id/btn_reward"
-        android:text="Load and Show Reward Ad"/>
+        android:text="Show Banner"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btn_reward"
-        android:id="@+id/btn_inter_reward"
-        android:text="Show Reward Tnterstitial Ad"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btn_inter_reward"
-        android:id="@+id/btn_loadandshowinter"
-        android:text="Load And Show Tnterstitial Ad"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btn_loadandshowinter"
         android:id="@+id/btn_loadandshowCollap"
-        android:text="Load And Show Collapsible Ad"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Load And Show Collapsible Ad"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        app:layout_constraintStart_toEndOf="@+id/btn_banner"/>
 
     <Button
+        android:id="@+id/btn_nativeMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Native Medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_loadandshowCollap" />
+
+    <Button
+        android:id="@+id/btn_nativeSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/btn_nativeMedium"
+        android:text="Show Native Small"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        app:layout_constraintTop_toBottomOf="@+id/btn_loadandshowCollap" />
+
+
+    <Button
+        android:id="@+id/btn_loadandshow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btn_loadandshowCollap"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Load And Show Native Medium"
+        app:layout_constraintTop_toBottomOf="@+id/btn_nativeSmall" />
+
+    <Button
         android:id="@+id/btn_shownativefullscreen"
-        android:text="Show Native Ad Full Screen in 10s"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show Native Ad Full Screen in 10s"
+        app:layout_constraintTop_toBottomOf="@+id/btn_loadandshow" />
+
+    <Button
+        android:id="@+id/btn_loadandshownativefullscreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Load Show Native Ad Full Screen in 10s"
+        app:layout_constraintTop_toBottomOf="@+id/btn_shownativefullscreen" />
+
+    <Button
+        android:id="@+id/btn_showinter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Interstitial Ad"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_loadandshownativefullscreen" />
+
+    <Button
+        android:id="@+id/btn_loadAndShowreward"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Load and Show Reward Ad"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        app:layout_constraintStart_toEndOf="@+id/btn_showinter"
+        app:layout_constraintTop_toBottomOf="@+id/btn_loadandshownativefullscreen" />
+
+    <Button
+        android:id="@+id/btn_show_inter_reward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Show Reward Interstitial Ad"
+        app:layout_constraintTop_toBottomOf="@+id/btn_loadAndShowreward" />
+
+    <Button
+        android:id="@+id/btn_loadandshowinter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/btn_show_inter_reward"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Load And Show Interstitial Ad"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        app:layout_constraintTop_toBottomOf="@+id/btn_loadAndShowreward" />
+
 
     <View
+        android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:id="@+id/line"
-        app:layout_constraintBottom_toTopOf="@+id/fl_banner"
-        android:visibility="gone"/>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/fl_banner"
-        android:minHeight="50dp"
-        android:visibility="gone"/>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/fl_native_medium"
-        android:minHeight="200dp"
-        android:visibility="gone"/>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/fl_native_small"
-        android:minHeight="90dp"
-        android:background="#4D000000"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/fl_banner" />
 
     <FrameLayout
+        android:id="@+id/fl_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="50dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/fl_native_medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="200dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/fl_native_small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#4D000000"
+        android:minHeight="90dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/fl_native_fullscreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fl_native_fullscreen"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </androidx.constraintlayout.widget.ConstraintLayout>

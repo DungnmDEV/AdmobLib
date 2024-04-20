@@ -1403,9 +1403,9 @@ object AdmobManager {
 
         isOverlayAdShowing = true
 
+        dialogLoading(activity)
 
         if (rewardInterAdHolder.isLoading) {
-            dialogLoading(activity)
             rewardInterAdHolder.mutable.observe(activity as LifecycleOwner) { reward: RewardedInterstitialAd? ->
                 reward?.let {
                     rewardInterAdHolder.mutable.removeObservers((activity as LifecycleOwner))
@@ -1451,7 +1451,6 @@ object AdmobManager {
             }
         } else {
             if (rewardInterAdHolder.rewardInterAd != null) {
-                dialogLoading(activity)
 
                 rewardInterAdHolder.rewardInterAd?.setOnPaidEventListener {
                     adCallback.onAdPaid(it, rewardInterAdHolder.rewardInterAd!!.adUnitId)

@@ -1,8 +1,6 @@
 package com.dungvnhh98.percas.studio.example
 
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -19,10 +17,7 @@ import com.dungvnhh98.percas.studio.admoblib.model.NativeAdHolder
 import com.dungvnhh98.percas.studio.admoblib.model.RewardInterAdHolder
 import com.dungvnhh98.percas.studio.example.databinding.ActivityMainBinding
 import com.google.android.gms.ads.AdValue
-import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MediaAspectRatio
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.nativead.NativeAd
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,32 +27,95 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        binding.btnLoadandshowCollap.isSelected = true
+        binding.btnNativeSmall.isSelected = true
+        binding.btnLoadAndShowreward.isSelected = true
+        binding.btnLoadandshowinter.isSelected = true
 
         binding.btnBanner.setOnClickListener {
             binding.flNativeMedium.gone()
             binding.flNativeSmall.gone()
+            binding.flBanner.visible()
+            binding.line.visible()
             loadAndShowBanner(this, "", binding.flBanner, binding.line)
         }
+        binding.btnLoadandshowCollap.setOnClickListener {
+            binding.flNativeMedium.gone()
+            binding.flNativeSmall.gone()
+            binding.flBanner.visible()
+            binding.line.visible()
+            loadAndShowBannerCollapsibleAd(this, "", true, binding.flBanner, binding.line)
+        }
         binding.btnNativeMedium.setOnClickListener {
+            binding.line.gone()
+            binding.flBanner.gone()
+            binding.flNativeSmall.gone()
+            showNativeAd(
+                this,
+                Ads.nativeHolder,
+                binding.flNativeMedium,
+                R.layout.ad_unified_medium,
+                true
+            )
         }
         binding.btnNativeSmall.setOnClickListener {
+            binding.line.gone()
+            binding.flBanner.gone()
+            binding.flNativeMedium.gone()
+            showNativeAd(
+                this,
+                Ads.nativeHolder,
+                binding.flNativeSmall,
+                R.layout.ad_unified_small,
+                false
+            )
         }
 
         binding.btnLoadandshow.setOnClickListener {
+            binding.line.gone()
+            binding.flBanner.gone()
+            binding.flNativeSmall.gone()
+            binding.flNativeMedium.visible()
+            loadAndShowNativeAds(
+                this,
+                Ads.nativeHolder3,
+                binding.flNativeMedium,
+                R.layout.ad_unified_medium,
+                true
+            )
         }
 
-        binding.btnInter.setOnClickListener {
-        }
-        binding.btnReward.setOnClickListener {
-        }
-        binding.btnInterReward.setOnClickListener {
-        }
-        binding.btnLoadandshowinter.setOnClickListener {
-        }
-
-        binding.btnLoadandshowCollap.setOnClickListener {
-        }
         binding.btnShownativefullscreen.setOnClickListener {
+            showNativeAdFullScreen(
+                this,
+                Ads.nativeHolder2,
+                binding.flNativeFullscreen,
+                R.layout.ad_unified_fullscreen
+            )
+        }
+        binding.btnLoadandshownativefullscreen.setOnClickListener {
+            loadAndShowNativeFullScreen(
+                this,
+                "",
+                binding.flNativeFullscreen,
+                R.layout.ad_unified_fullscreen,
+                MediaAspectRatio.PORTRAIT
+            )
+        }
+
+        binding.btnShowinter.setOnClickListener {
+            showInterstitialAd(this, Ads.interholder)
+        }
+
+        binding.btnLoadandshowinter.setOnClickListener {
+            loadAndShowInterstitialAd(this, Ads.interholder2)
+        }
+
+        binding.btnLoadAndShowreward.setOnClickListener {
+            loadAndShowRewardAd(this, "")
+        }
+        binding.btnShowInterReward.setOnClickListener {
+            showRewardInterAd(this, Ads.interRewardHolder)
         }
     }
 
@@ -92,7 +150,14 @@ class MainActivity : AppCompatActivity() {
 
             })
     }
-    fun loadAndShowBannerCollapsibleAd(activity: Activity, idBannerCollapsible: String, isBottomCollapsible:Boolean, viewBannerCollapsibleAd: ViewGroup, viewLine: View) {
+
+    fun loadAndShowBannerCollapsibleAd(
+        activity: Activity,
+        idBannerCollapsible: String,
+        isBottomCollapsible: Boolean,
+        viewBannerCollapsibleAd: ViewGroup,
+        viewLine: View
+    ) {
         AdmobManager.loadAndShowBannerCollapsibleAd(
             activity,
             idBannerCollapsible,
@@ -126,36 +191,22 @@ class MainActivity : AppCompatActivity() {
             })
     }
 
-    fun showNativeAd(activity: Activity, nativeAdHolder: NativeAdHolder, viewNativeAd: ViewGroup, layoutNativeFormat: Int, isNativeAdMedium: Boolean) {
-        AdmobManager.showNativeAd(activity, nativeAdHolder, viewNativeAd, layoutNativeFormat, isNativeAdMedium, object : AdmobManager.ShowAdCallBack{
-            override fun onAdShowed() {
-            }
-
-            override fun onAdFailed(error: String) {
-                viewNativeAd.gone()
-            }
-
-            override fun onAdClosed() {
-                
-            }
-
-            override fun onAdPaid(adValue: AdValue, adUnit: String) {
-                
-            }
-
-        })
-    }
-
-
-    fun loadAndShowNativeAds(activity: Activity, nativeAdHolder: NativeAdHolder, viewNativeAd: ViewGroup, layoutNativeAdFormat: Int, isNativeAdMedium: Boolean) {
-        AdmobManager.loadAndShowNativeAd(activity, nativeAdHolder, viewNativeAd, layoutNativeAdFormat, true,
-            object : AdmobManager.LoadAndShowAdCallBack {
-                override fun onAdLoaded() {
-                    
-                }
-
+    fun showNativeAd(
+        activity: Activity,
+        nativeAdHolder: NativeAdHolder,
+        viewNativeAd: ViewGroup,
+        layoutNativeFormat: Int,
+        isNativeAdMedium: Boolean
+    ) {
+        AdmobManager.showNativeAd(
+            activity,
+            nativeAdHolder,
+            viewNativeAd,
+            layoutNativeFormat,
+            isNativeAdMedium,
+            object : AdmobManager.ShowAdCallBack {
                 override fun onAdShowed() {
-                    
+                    viewNativeAd.visible()
                 }
 
                 override fun onAdFailed(error: String) {
@@ -163,157 +214,239 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onAdClosed() {
-                    
-                }
 
-                override fun onAdClicked() {
-                    
                 }
 
                 override fun onAdPaid(adValue: AdValue, adUnit: String) {
-                    
+
                 }
 
             })
     }
-    
-    fun showNativeAdFullScreen(activity: Activity, nativeAdHolder: NativeAdHolder, viewNativeAd: ViewGroup, layoutNativeAdFormat: Int){
-        AdmobManager.showNativeAdFullScreen(activity, nativeAdHolder, viewNativeAd, layoutNativeAdFormat, object : AdmobManager.ShowAdCallBack{
-            override fun onAdShowed() {
-                
-            }
 
-            override fun onAdFailed(error: String) {
-                viewNativeAd.gone()
-            }
 
-            override fun onAdClosed() {
-                
-            }
+    fun loadAndShowNativeAds(
+        activity: Activity,
+        nativeAdHolder: NativeAdHolder,
+        viewNativeAd: ViewGroup,
+        layoutNativeAdFormat: Int,
+        isNativeAdMedium: Boolean
+    ) {
+        AdmobManager.loadAndShowNativeAd(activity,
+            nativeAdHolder,
+            viewNativeAd,
+            layoutNativeAdFormat,
+            isNativeAdMedium,
+            object : AdmobManager.LoadAndShowAdCallBack {
+                override fun onAdLoaded() {
 
-            override fun onAdPaid(adValue: AdValue, adUnit: String) {
-                
-            }
+                }
 
-        })
-    }
-    
-    fun loadAndShowNativeFullScreen(activity: Activity, idNativeAd: String, viewNativeAd: ViewGroup, layoutNativeFormat: Int, mediaAspectRatio: Int){
-        AdmobManager.loadAndShowNativeAdFullScreen(activity, idNativeAd, viewNativeAd, layoutNativeFormat, mediaAspectRatio, object :AdmobManager.LoadAndShowAdCallBack{
-            override fun onAdLoaded() {
-                
-            }
+                override fun onAdShowed() {
 
-            override fun onAdShowed() {
-                
-            }
+                }
 
-            override fun onAdFailed(error: String) {
-                viewNativeAd.gone()
-            }
+                override fun onAdFailed(error: String) {
+                    viewNativeAd.gone()
+                }
 
-            override fun onAdClosed() {
-                
-            }
+                override fun onAdClosed() {
 
-            override fun onAdClicked() {
-                
-            }
+                }
 
-            override fun onAdPaid(adValue: AdValue, adUnit: String) {
-                
-            }
+                override fun onAdClicked() {
 
-        })
-    }
-    fun showInterstitialAd(activity: Activity, interAdHolder: InterAdHolder){
-        AdmobManager.showInterstitialAd(activity, interAdHolder, object : AdmobManager.ShowAdCallBack{
-            override fun onAdShowed() {
-                
-            }
+                }
 
-            override fun onAdFailed(error: String) {
-            }
+                override fun onAdPaid(adValue: AdValue, adUnit: String) {
 
-            override fun onAdClosed() {
-            }
+                }
 
-            override fun onAdPaid(adValue: AdValue, adUnit: String) {
-                
-            }
-
-        })
-    }
-    fun loadAndShowInterstitialAd(activity: Activity, interAdHolder: InterAdHolder){
-        AdmobManager.loadAndShowInterstitialAd(activity, interAdHolder, object :AdmobManager.LoadAndShowAdCallBack{
-            override fun onAdLoaded() {
-                
-            }
-
-            override fun onAdShowed() {
-                
-            }
-
-            override fun onAdFailed(error: String) {
-            }
-
-            override fun onAdClosed() {
-            }
-
-            override fun onAdClicked() {
-                
-            }
-
-            override fun onAdPaid(adValue: AdValue, adUnit: String) {
-                
-            }
-
-        })
+            })
     }
 
-    fun loadAndShowRewardAd(activity: Activity, idRewardAd: String){
-        AdmobManager.loadAndShowRewardAd(activity, idRewardAd, object : AdmobManager.LoadAndShowRewardAdCallBack{
-            override fun onAdLoaded() {
-            }
+    fun showNativeAdFullScreen(
+        activity: Activity,
+        nativeAdHolder: NativeAdHolder,
+        viewNativeAd: ViewGroup,
+        layoutNativeAdFormat: Int
+    ) {
+        AdmobManager.showNativeAdFullScreen(
+            activity,
+            nativeAdHolder,
+            viewNativeAd,
+            layoutNativeAdFormat,
+            object : AdmobManager.ShowAdCallBack {
+                override fun onAdShowed() {
+                    viewNativeAd.visible()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        viewNativeAd.gone()
+                    }, 10000)
+                }
 
-            override fun onAdShowed() {
-            }
+                override fun onAdFailed(error: String) {
+                    viewNativeAd.gone()
+                }
 
-            override fun onAdFailed(error: String) {
-            }
+                override fun onAdClosed() {
 
-            override fun onAdClosed() {
-            }
+                }
 
-            override fun onAdEarned() {
-                Log.d(TAG, "onAdEarned: Collected reward!")
-            }
+                override fun onAdPaid(adValue: AdValue, adUnit: String) {
 
-            override fun onAdPaid(adValue: AdValue, adUnit: String) {
-            }
+                }
 
-        })
+            })
     }
-    fun showRewardInterAd(activity: Activity, rewardInterAdHolder: RewardInterAdHolder){
-        AdmobManager.showInterReward(activity, rewardInterAdHolder, object : AdmobManager.ShowRewardAdCallBack{
-            override fun onAdShowed() {
 
-            }
+    fun loadAndShowNativeFullScreen(
+        activity: Activity,
+        idNativeAd: String,
+        viewNativeAd: ViewGroup,
+        layoutNativeFormat: Int,
+        mediaAspectRatio: Int
+    ) {
+        AdmobManager.loadAndShowNativeAdFullScreen(
+            activity,
+            idNativeAd,
+            viewNativeAd,
+            layoutNativeFormat,
+            mediaAspectRatio,
+            object : AdmobManager.LoadAndShowAdCallBack {
+                override fun onAdLoaded() {
 
-            override fun onAdClosed() {
-            }
+                }
 
-            override fun onAdEarned() {
-                Log.d(TAG, "onAdEarned: Collected reward!")
-            }
+                override fun onAdShowed() {
+                    viewNativeAd.visible()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        viewNativeAd.gone()
+                    }, 10000)
+                }
 
-            override fun onAdFailed(error: String) {
-            }
+                override fun onAdFailed(error: String) {
+                    viewNativeAd.gone()
+                }
 
-            override fun onAdPaid(adValue: AdValue, adUnit: String) {
-            }
+                override fun onAdClosed() {
 
-        })
+                }
+
+                override fun onAdClicked() {
+
+                }
+
+                override fun onAdPaid(adValue: AdValue, adUnit: String) {
+
+                }
+
+            })
+    }
+
+    fun showInterstitialAd(activity: Activity, interAdHolder: InterAdHolder) {
+        AdmobManager.showInterstitialAd(
+            activity,
+            interAdHolder,
+            object : AdmobManager.ShowAdCallBack {
+                override fun onAdShowed() {
+
+                }
+
+                override fun onAdFailed(error: String) {
+                }
+
+                override fun onAdClosed() {
+                }
+
+                override fun onAdPaid(adValue: AdValue, adUnit: String) {
+
+                }
+
+            })
+    }
+
+    fun loadAndShowInterstitialAd(activity: Activity, interAdHolder: InterAdHolder) {
+        AdmobManager.loadAndShowInterstitialAd(
+            activity,
+            interAdHolder,
+            object : AdmobManager.LoadAndShowAdCallBack {
+                override fun onAdLoaded() {
+
+                }
+
+                override fun onAdShowed() {
+
+                }
+
+                override fun onAdFailed(error: String) {
+                }
+
+                override fun onAdClosed() {
+                }
+
+                override fun onAdClicked() {
+
+                }
+
+                override fun onAdPaid(adValue: AdValue, adUnit: String) {
+
+                }
+
+            })
+    }
+
+    fun loadAndShowRewardAd(activity: Activity, idRewardAd: String) {
+        AdmobManager.loadAndShowRewardAd(
+            activity,
+            idRewardAd,
+            object : AdmobManager.LoadAndShowRewardAdCallBack {
+                override fun onAdLoaded() {
+                }
+
+                override fun onAdShowed() {
+                }
+
+                override fun onAdFailed(error: String) {
+                }
+
+                override fun onAdClosed() {
+                }
+
+                override fun onAdEarned() {
+                    Log.d(TAG, "onAdEarned: Collected reward!")
+                    Toast.makeText(this@MainActivity,"Collected Reward", Toast.LENGTH_LONG).show()
+                }
+
+                override fun onAdPaid(adValue: AdValue, adUnit: String) {
+                }
+
+            })
+    }
+
+    fun showRewardInterAd(activity: Activity, rewardInterAdHolder: RewardInterAdHolder) {
+        AdmobManager.showInterReward(
+            activity,
+            rewardInterAdHolder,
+            object : AdmobManager.ShowRewardAdCallBack {
+                override fun onAdShowed() {
+
+                }
+
+                override fun onAdClosed() {
+                }
+
+                override fun onAdEarned() {
+                    Log.d(TAG, "onAdEarned: Collected reward!")
+                    Toast.makeText(this@MainActivity,"Collected Reward", Toast.LENGTH_LONG).show()
+                }
+
+                override fun onAdFailed(error: String) {
+                }
+
+                override fun onAdPaid(adValue: AdValue, adUnit: String) {
+                }
+
+            })
     }
 
 }

@@ -9,5 +9,6 @@ object Ads {
     val nativeHolder2 = NativeAdHolder("")
     val nativeHolder3 = NativeAdHolder("")
     val interholder = InterAdHolder("")
+    val interholder2 = InterAdHolder("")
     val interRewardHolder = RewardInterAdHolder("")
 }

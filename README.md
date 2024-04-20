@@ -213,7 +213,7 @@ fun showNativeAd(activity: Activity, nativeAdHolder: NativeAdHolder, viewNativeA
 
 //Use load and show Native ad Function
  fun loadAndShowNativeAds(activity: Activity, nativeAdHolder: NativeAdHolder, viewNativeAd: ViewGroup, layoutNativeAdFormat: Int, isNativeAdMedium: Boolean) {
-        AdmobManager.loadAndShowNativeAd(activity, nativeAdHolder, viewNativeAd, layoutNativeAdFormat, true,
+        AdmobManager.loadAndShowNativeAd(activity, nativeAdHolder, viewNativeAd, layoutNativeAdFormat, isNativeAdMedium,
             object : AdmobManager.LoadAndShowAdCallBack {
                 override fun onAdLoaded() {
                     
