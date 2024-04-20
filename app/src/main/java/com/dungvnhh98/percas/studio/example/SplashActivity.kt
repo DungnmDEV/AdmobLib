@@ -1,22 +1,15 @@
 package com.dungvnhh98.percas.studio.example
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.dungvnhh98.percas.studio.admoblib.AdmobManager
 import com.dungvnhh98.percas.studio.admoblib.AppOpenAdsManager
 import com.dungvnhh98.percas.studio.admoblib.model.InterAdHolder
 import com.dungvnhh98.percas.studio.admoblib.model.NativeAdHolder
+import com.dungvnhh98.percas.studio.admoblib.model.RewardInterAdHolder
 import com.google.android.gms.ads.AdValue
-import com.google.android.gms.ads.MediaAspectRatio
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.nativead.NativeAd
 
 class SplashActivity : AppCompatActivity() {
     private val TAG = "TAG ==="
@@ -97,6 +90,23 @@ class SplashActivity : AppCompatActivity() {
 
             override fun onAdPaid(adValue: AdValue, adUnit: String) {
             }
+        })
+    }
+    fun loadInterRewardAd(context: Context, rewardInterAdHolder: RewardInterAdHolder){
+        AdmobManager.loadInterReward(context, rewardInterAdHolder, object : AdmobManager.LoadAdCallBack{
+            override fun onAdLoaded() {
+            }
+
+            override fun onAdFailed(error: String) {
+            }
+
+            override fun onAdClicked() {
+            }
+
+            override fun onAdPaid(adValue: AdValue, adUnit: String) {
+                
+            }
+
         })
     }
 }

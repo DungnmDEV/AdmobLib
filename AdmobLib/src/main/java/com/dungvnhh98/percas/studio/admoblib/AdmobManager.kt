@@ -29,7 +29,7 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import com.airbnb.lottie.LottieAnimationView
 import com.dungvnhh98.percas.studio.admoblib.model.InterAdHolder
 import com.dungvnhh98.percas.studio.admoblib.model.NativeAdHolder
-import com.dungvnhh98.percas.studio.admoblib.model.RewardInterHolder
+import com.dungvnhh98.percas.studio.admoblib.model.RewardInterAdHolder
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.AdError
@@ -1317,9 +1317,9 @@ object AdmobManager {
 
     @JvmStatic
     fun loadInterReward(
-        activity: Activity,
-        rewardInterHolder: RewardInterHolder,
-        adLoadCallback: LoadRewardAdCallBack
+        context: Context,
+        rewardInterAdHolder: RewardInterAdHolder,
+        adLoadCallback: LoadAdCallBack
     ) {
         val TAG = "Load INTERSTITIAL REWARD AD"
         if (!isEnableAd) {
@@ -1328,43 +1328,43 @@ object AdmobManager {
             return
         }
 
-        if (!activity.isNetworkConnected()) {
+        if (!context.isNetworkConnected()) {
             adLoadCallback.onAdFailed("No Internet!")
             Log.e(TAG, "No Internet!")
             return
         }
-        if (rewardInterHolder.rewardInterAd != null) {
+        if (rewardInterAdHolder.rewardInterAd != null) {
             adLoadCallback.onAdFailed("This Interstitial Ad is not empty. Don't need to load again!")
             Log.e(TAG, "This Interstitial Ad is not empty. Don't need to load again!")
             return
         }
-        rewardInterHolder.isLoading = true
+        rewardInterAdHolder.isLoading = true
 
         if (adRequest == null) {
             initAdRequest(timeOut)
         }
 
         if (isTestAdmob) {
-            rewardInterHolder.ads = activity.getString(R.string.id_test_reward_inter_admob)
+            rewardInterAdHolder.ads = context.getString(R.string.id_test_reward_inter_admob)
         }
 
         RewardedInterstitialAd.load(
-            activity,
-            rewardInterHolder.ads,
+            context,
+            rewardInterAdHolder.ads,
             adRequest!!,
             object : RewardedInterstitialAdLoadCallback() {
                 override fun onAdLoaded(interstitialRewardAd: RewardedInterstitialAd) {
-                    rewardInterHolder.rewardInterAd = interstitialRewardAd
-                    rewardInterHolder.mutable.value = interstitialRewardAd
-                    rewardInterHolder.isLoading = false
+                    rewardInterAdHolder.rewardInterAd = interstitialRewardAd
+                    rewardInterAdHolder.mutable.value = interstitialRewardAd
+                    rewardInterAdHolder.isLoading = false
                     adLoadCallback.onAdLoaded()
                     Log.d(TAG, "onAdLoaded")
                 }
 
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-                    rewardInterHolder.rewardInterAd = null
-                    rewardInterHolder.isLoading = false
-                    rewardInterHolder.mutable.value = null
+                    rewardInterAdHolder.rewardInterAd = null
+                    rewardInterAdHolder.isLoading = false
+                    rewardInterAdHolder.mutable.value = null
                     adLoadCallback.onAdFailed(loadAdError.message + "\nCause\n" + loadAdError.cause)
                     Log.e(TAG, loadAdError.message + "\nCause\n" + loadAdError.cause)
                 }
@@ -1375,7 +1375,7 @@ object AdmobManager {
     @JvmStatic
     fun showInterReward(
         activity: Activity,
-        rewardInterHolder: RewardInterHolder,
+        rewardInterAdHolder: RewardInterAdHolder,
         adCallback: ShowRewardAdCallBack
     ) {
         if (adRequest == null) {
@@ -1404,20 +1404,20 @@ object AdmobManager {
         isOverlayAdShowing = true
 
 
-        if (rewardInterHolder.isLoading) {
+        if (rewardInterAdHolder.isLoading) {
             dialogLoading(activity)
-            rewardInterHolder.mutable.observe(activity as LifecycleOwner) { reward: RewardedInterstitialAd? ->
+            rewardInterAdHolder.mutable.observe(activity as LifecycleOwner) { reward: RewardedInterstitialAd? ->
                 reward?.let {
-                    rewardInterHolder.mutable.removeObservers((activity as LifecycleOwner))
+                    rewardInterAdHolder.mutable.removeObservers((activity as LifecycleOwner))
                     it.setOnPaidEventListener { value ->
-                        adCallback.onAdPaid(value, rewardInterHolder.rewardInterAd!!.adUnitId)
+                        adCallback.onAdPaid(value, rewardInterAdHolder.rewardInterAd!!.adUnitId)
                     }
-                    rewardInterHolder.rewardInterAd?.fullScreenContentCallback =
+                    rewardInterAdHolder.rewardInterAd?.fullScreenContentCallback =
                         object : FullScreenContentCallback() {
                             override fun onAdDismissedFullScreenContent() {
-                                rewardInterHolder.rewardInterAd = null
-                                rewardInterHolder.mutable.removeObservers((activity as LifecycleOwner))
-                                rewardInterHolder.mutable.value = null
+                                rewardInterAdHolder.rewardInterAd = null
+                                rewardInterAdHolder.mutable.removeObservers((activity as LifecycleOwner))
+                                rewardInterAdHolder.mutable.value = null
                                 if (AppResumeAdsManager.getInstance().isInitialized) {
                                     AppResumeAdsManager.getInstance().isAppResumeEnabled = true
                                 }
@@ -1427,9 +1427,9 @@ object AdmobManager {
                             }
 
                             override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                                rewardInterHolder.rewardInterAd = null
-                                rewardInterHolder.mutable.removeObservers((activity as LifecycleOwner))
-                                rewardInterHolder.mutable.value = null
+                                rewardInterAdHolder.rewardInterAd = null
+                                rewardInterAdHolder.mutable.removeObservers((activity as LifecycleOwner))
+                                rewardInterAdHolder.mutable.value = null
                                 if (AppResumeAdsManager.getInstance().isInitialized) {
                                     AppResumeAdsManager.getInstance().isAppResumeEnabled = true
                                 }
@@ -1450,18 +1450,18 @@ object AdmobManager {
                 }
             }
         } else {
-            if (rewardInterHolder.rewardInterAd != null) {
+            if (rewardInterAdHolder.rewardInterAd != null) {
                 dialogLoading(activity)
 
-                rewardInterHolder.rewardInterAd?.setOnPaidEventListener {
-                    adCallback.onAdPaid(it, rewardInterHolder.rewardInterAd!!.adUnitId)
+                rewardInterAdHolder.rewardInterAd?.setOnPaidEventListener {
+                    adCallback.onAdPaid(it, rewardInterAdHolder.rewardInterAd!!.adUnitId)
                 }
-                rewardInterHolder.rewardInterAd?.fullScreenContentCallback =
+                rewardInterAdHolder.rewardInterAd?.fullScreenContentCallback =
                     object : FullScreenContentCallback() {
                         override fun onAdDismissedFullScreenContent() {
-                            rewardInterHolder.rewardInterAd = null
-                            rewardInterHolder.mutable.removeObservers((activity as LifecycleOwner))
-                            rewardInterHolder.mutable.value = null
+                            rewardInterAdHolder.rewardInterAd = null
+                            rewardInterAdHolder.mutable.removeObservers((activity as LifecycleOwner))
+                            rewardInterAdHolder.mutable.value = null
                             if (AppResumeAdsManager.getInstance().isInitialized) {
                                 AppResumeAdsManager.getInstance().isAppResumeEnabled = true
                             }
@@ -1471,9 +1471,9 @@ object AdmobManager {
                         }
 
                         override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                            rewardInterHolder.rewardInterAd = null
-                            rewardInterHolder.mutable.removeObservers((activity as LifecycleOwner))
-                            rewardInterHolder.mutable.value = null
+                            rewardInterAdHolder.rewardInterAd = null
+                            rewardInterAdHolder.mutable.removeObservers((activity as LifecycleOwner))
+                            rewardInterAdHolder.mutable.value = null
                             if (AppResumeAdsManager.getInstance().isInitialized) {
                                 AppResumeAdsManager.getInstance().isAppResumeEnabled = true
                             }
@@ -1488,7 +1488,7 @@ object AdmobManager {
                             dismissAdDialog()
                         }
                     }
-                rewardInterHolder.rewardInterAd?.show(activity) { adCallback.onAdEarned() }
+                rewardInterAdHolder.rewardInterAd?.show(activity) { adCallback.onAdEarned() }
 
             } else {
                 isOverlayAdShowing = false
@@ -1664,11 +1664,6 @@ object AdmobManager {
         fun onAdClosed()
         fun onAdClicked()
         fun onAdPaid(adValue: AdValue, adUnit: String)
-    }
-
-    interface LoadRewardAdCallBack {
-        fun onAdLoaded()
-        fun onAdFailed(error: String)
     }
 
     interface ShowRewardAdCallBack {

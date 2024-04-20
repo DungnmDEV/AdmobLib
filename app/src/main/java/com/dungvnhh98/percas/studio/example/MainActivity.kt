@@ -16,6 +16,7 @@ import com.dungvnhh98.percas.studio.admoblib.ViewControl.gone
 import com.dungvnhh98.percas.studio.admoblib.ViewControl.visible
 import com.dungvnhh98.percas.studio.admoblib.model.InterAdHolder
 import com.dungvnhh98.percas.studio.admoblib.model.NativeAdHolder
+import com.dungvnhh98.percas.studio.admoblib.model.RewardInterAdHolder
 import com.dungvnhh98.percas.studio.example.databinding.ActivityMainBinding
 import com.google.android.gms.ads.AdValue
 import com.google.android.gms.ads.AdView
@@ -270,6 +271,49 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    fun loadAndShowRewardAd(activity: Activity, idRewardAd: String){
+        AdmobManager.loadAndShowRewardAd(activity, idRewardAd, object : AdmobManager.LoadAndShowRewardAdCallBack{
+            override fun onAdLoaded() {
+            }
 
+            override fun onAdShowed() {
+            }
+
+            override fun onAdFailed(error: String) {
+            }
+
+            override fun onAdClosed() {
+            }
+
+            override fun onAdEarned() {
+                Log.d(TAG, "onAdEarned: Collected reward!")
+            }
+
+            override fun onAdPaid(adValue: AdValue, adUnit: String) {
+            }
+
+        })
+    }
+    fun showRewardInterAd(activity: Activity, rewardInterAdHolder: RewardInterAdHolder){
+        AdmobManager.showInterReward(activity, rewardInterAdHolder, object : AdmobManager.ShowRewardAdCallBack{
+            override fun onAdShowed() {
+
+            }
+
+            override fun onAdClosed() {
+            }
+
+            override fun onAdEarned() {
+                Log.d(TAG, "onAdEarned: Collected reward!")
+            }
+
+            override fun onAdFailed(error: String) {
+            }
+
+            override fun onAdPaid(adValue: AdValue, adUnit: String) {
+            }
+
+        })
+    }
 
 }
