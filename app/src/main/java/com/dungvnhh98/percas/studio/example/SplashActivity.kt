@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.dungvnhh98.percas.studio.admoblib.AdmobManager
-import com.dungvnhh98.percas.studio.admoblib.AppOpenAdsManager
+import com.dungvnhh98.percas.studio.admoblib.Admob.AdmobManager
+import com.dungvnhh98.percas.studio.admoblib.Admob.AppOpenAdsManager
 import com.dungvnhh98.percas.studio.admoblib.model.InterAdHolder
 import com.dungvnhh98.percas.studio.admoblib.model.NativeAdHolder
 import com.dungvnhh98.percas.studio.admoblib.model.RewardInterAdHolder

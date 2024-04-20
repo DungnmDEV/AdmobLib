@@ -1,4 +1,4 @@
-package com.dungvnhh98.percas.studio.admoblib
+package com.dungvnhh98.percas.studio.admoblib.Admob
 
 import android.app.Activity
 import android.app.Dialog
@@ -12,6 +12,7 @@ import android.view.Window
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.airbnb.lottie.LottieAnimationView
+import com.dungvnhh98.percas.studio.admoblib.R
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdValue

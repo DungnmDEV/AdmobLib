@@ -1,4 +1,4 @@
-package com.dungvnhh98.percas.studio.admoblib;
+package com.dungvnhh98.percas.studio.admoblib.Admob;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -20,6 +20,7 @@ import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ProcessLifecycleOwner;
 
+import com.dungvnhh98.percas.studio.admoblib.R;
 import com.google.android.gms.ads.AdActivity;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;

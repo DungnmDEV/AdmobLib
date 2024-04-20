@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package com.dungvnhh98.percas.studio.admoblib
+package com.dungvnhh98.percas.studio.admoblib.Admob
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -27,6 +27,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.airbnb.lottie.LottieAnimationView
+import com.dungvnhh98.percas.studio.admoblib.R
 import com.dungvnhh98.percas.studio.admoblib.model.InterAdHolder
 import com.dungvnhh98.percas.studio.admoblib.model.NativeAdHolder
 import com.dungvnhh98.percas.studio.admoblib.model.RewardInterAdHolder
@@ -80,13 +81,13 @@ object AdmobManager {
         if (timeOut < 5000 && timeOut != 0) {
             Toast.makeText(context, "Limit time ~10000", Toast.LENGTH_LONG).show()
         }
-        this.timeOut = if (timeOut > 0) {
+        AdmobManager.timeOut = if (timeOut > 0) {
             timeOut
         } else {
             10000
         }
-        this.isTestAdmob = isTestAd
-        this.isEnableAd = isEnableAd
+        isTestAdmob = isTestAd
+        AdmobManager.isEnableAd = isEnableAd
 
         MobileAds.initialize(context!!) {}
 

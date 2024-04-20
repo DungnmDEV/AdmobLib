@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.dungvnhh98.percas.studio.admoblib.AdmobManager
+import com.dungvnhh98.percas.studio.admoblib.Admob.AdmobManager
 import com.dungvnhh98.percas.studio.admoblib.ViewControl.gone
 import com.dungvnhh98.percas.studio.admoblib.ViewControl.visible
 import com.dungvnhh98.percas.studio.admoblib.model.InterAdHolder
