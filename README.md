@@ -390,7 +390,75 @@ fun loadNativeAdFullScreen(context: Context, nativeAdHolder: NativeAdHolder, med
     }
 
 ```
+- Reward Ad:
+```bash
+//Load and show Reward Ad
+   fun loadAndShowRewardAd(activity: Activity, idRewardAd: String){
+        AdmobManager.loadAndShowRewardAd(activity, idRewardAd, object : AdmobManager.LoadAndShowRewardAdCallBack{
+            override fun onAdLoaded() {
+            }
 
+            override fun onAdShowed() {
+            }
+
+            override fun onAdFailed(error: String) {
+            }
+
+            override fun onAdClosed() {
+            }
+
+            override fun onAdEarned() {
+                Log.d(TAG, "onAdEarned: Collected reward!")
+            }
+
+            override fun onAdPaid(adValue: AdValue, adUnit: String) {
+            }
+
+        })
+    }
+
+//Load Reward Interstitial Ad
+fun loadInterRewardAd(context: Context, rewardInterAdHolder: RewardInterAdHolder){
+        AdmobManager.loadInterReward(context, rewardInterAdHolder, object : AdmobManager.LoadAdCallBack{
+            override fun onAdLoaded() {
+            }
+
+            override fun onAdFailed(error: String) {
+            }
+
+            override fun onAdClicked() {
+            }
+
+            override fun onAdPaid(adValue: AdValue, adUnit: String) {
+                
+            }
+
+        })
+    }
+
+//Show Reward Interstitial Ad
+fun showRewardInterAd(activity: Activity, rewardInterAdHolder: RewardInterAdHolder){
+        AdmobManager.showInterReward(activity, rewardInterAdHolder, object : AdmobManager.ShowRewardAdCallBack{
+            override fun onAdShowed() {
+                
+            }
+
+            override fun onAdClosed() {
+            }
+
+            override fun onAdEarned() {
+                Log.d(TAG, "onAdEarned: Collected reward!")
+            }
+
+            override fun onAdFailed(error: String) {
+            }
+
+            override fun onAdPaid(adValue: AdValue, adUnit: String) {
+            }
+
+        })
+    }
+```
 - Other extention:
 ```bash
 \\ Visible view
