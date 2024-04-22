@@ -31,7 +31,7 @@ Step 3: Add to AndroidManifest.xml
 ```
 
 Step 4: Create MyApplication extend Application
-```bash
+```kotlin
 class MyApplication: Application() {
 
     override fun onCreate() {
@@ -48,7 +48,7 @@ Step 5: Use MyApplication in AndroidManifest.xml
 </application>
 ```
 Step 6: Init Admob 
-```bash
+```kotlin
 class MyApplication: Application() {
 
     override fun onCreate() {
@@ -63,7 +63,7 @@ class MyApplication: Application() {
 <h1>Note: If your use test Ad ID, you can leave the your Ad ID blank</h1>
 
 - AppResumeAdsManager:
-```bash
+```kotlin
 class MyApplication: Application() {
     override fun onCreate() {
         super.onCreate()
@@ -73,7 +73,7 @@ class MyApplication: Application() {
 }
 ```
 - AppOpenAdsManager:
-```bash
+```kotlin
 val appOpenAdsManager = AppOpenAdsManager(this,appOpenID,
             timeOut = 10000, object : AppOpenAdsManager.AppOpenAdListener {
             override fun onAdClose() {
@@ -92,7 +92,7 @@ val appOpenAdsManager = AppOpenAdsManager(this,appOpenID,
 ```
 
 - Banner Ads:
-```bash
+```kotlin
 //Load and show Banner Ad normal
     fun loadAndShowBanner(
         activity: Activity,
@@ -163,7 +163,7 @@ val appOpenAdsManager = AppOpenAdsManager(this,appOpenID,
 
 ```
 - Native Ad:
-```bash
+```kotlin
 // Load Native Ads before show it or use Load and Show Native Ads Function
 // Use NativeAdHolder to hold Native ads id
 
@@ -319,7 +319,7 @@ fun loadNativeAdFullScreen(context: Context, nativeAdHolder: NativeAdHolder, med
     }
 ```
 - Interstitial Ad:
-```bash
+```kotlin
 //Load interstitial ad
     fun loadInterstitialAd(context: Context, interAdHolder: InterAdHolder){
         AdmobManager.loadInterstitialAd(context, interAdHolder, object : AdmobManager.LoadAdCallBack{
@@ -391,7 +391,7 @@ fun loadNativeAdFullScreen(context: Context, nativeAdHolder: NativeAdHolder, med
 
 ```
 - Reward Ad:
-```bash
+```kotlin
 //Load and show Reward Ad
    fun loadAndShowRewardAd(activity: Activity, idRewardAd: String){
         AdmobManager.loadAndShowRewardAd(activity, idRewardAd, object : AdmobManager.LoadAndShowRewardAdCallBack{
@@ -459,8 +459,88 @@ fun showRewardInterAd(activity: Activity, rewardInterAdHolder: RewardInterAdHold
         })
     }
 ```
-- Other extention:
-```bash
+
+# Adjust Manager:
+## Step 1: Add Adjust to your project
+ 
+ Visit the following link and download the latest version of the 2 files ARR and JAR: https://github.com/adjust/android_sdk/releases
+ <br>
+ In the directory {your_project_name}/app, create a libs directory and add the 2 downloaded files to this directory
+<br>
+ Open your app-level build.gradle file and add the following, in their respective sections:
+ ```bash
+android {
+	defaultConfig {
+	ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
+	...
+	}
+
+	...
+}
+
+dependencies {
+	...
+	implementation files('libs/adjust-lib.aar')
+}
+```
+ Add to the app's proguard-rules.pro file:
+ ```bash
+-keep class com.adjust.sdk.** { *; }
+-keep class com.google.android.gms.common.ConnectionResult {
+   int SUCCESS;
+}
+-keep class com.google.android.gms.ads.identifier.AdvertisingIdClient {
+   com.google.android.gms.ads.identifier.AdvertisingIdClient$Info getAdvertisingIdInfo(android.content.Context);
+}
+-keep class com.google.android.gms.ads.identifier.AdvertisingIdClient$Info {
+   java.lang.String getId();
+   boolean isLimitAdTrackingEnabled();
+}
+-keep public class com.android.installreferrer.** { *; }
+```
+ Add to the AndroidManifest.xml:
+ ```bash
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission  android:name="com.google.android.gms.permission.AD_ID"/>
+
+<application>
+	...
+	<receiver
+	   android:name="com.adjust.sdk.AdjustReferrerReceiver"
+   	   android:exported="true"
+ 	   android:permission="android.permission.INSTALL_PACKAGES">
+	   <intent-filter>
+  	     <action android:name="com.android.vending.INSTALL_REFERRER" />
+	   </intent-filter>
+	</receiver>
+</application>
+```
+## Step 2: Init Adjust
+- In MyApplication:
+```kotlin
+class MyApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        ...
+	
+        AdjustManager.initAdjust(this, {your_app_token}, isTestAdjust) 
+    }
+}
+//In your release version, change isTestAdjust to falsefalse
+```
+## Step 3: Post revenue to Adjust
+
+In the `onAdPaid` event:
+
+```kotlin
+override fun onAdPaid(adValue: AdValue, adUnit: String) {
+    AdjustManager.postRevenue(adValue, adUnit)
+}
+```
+# Other extention:
+```kotlin
 \\ Visible view
 	View.visible()
 
