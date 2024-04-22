@@ -539,6 +539,98 @@ override fun onAdPaid(adValue: AdValue, adUnit: String) {
     AdjustManager.postRevenue(adValue, adUnit)
 }
 ```
+# Firebase Instruction
+## Step 1: Add Firebase to your project
+Download and save file google-services.json to file **app**
+In Android Studio: **Tools** > **Firebase** > click and add SDK of **Analytics**, **Crashlytics**, **Cloud Messaging**, **Remote Config**
+## Step 2: Remote config
+You need a remote_config_defaults.xml file to store keys and default values, you can create new entries to store new keys
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+    <entry>
+        <key>test_ad</key>
+        <value>true</value>
+    </entry>
+</defaultsMap>
+
+```
+
+```kotlin
+fun initRemoteConfig(key: String, onCompleteListener: OnCompleteListener<Boolean>) {
+        val mFirebaseRemoteConfig: FirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+        val configSettings: FirebaseRemoteConfigSettings = FirebaseRemoteConfigSettings.Builder()
+            .setMinimumFetchIntervalInSeconds(3600)
+            .build()
+
+        mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings)
+        mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
+
+        mFirebaseRemoteConfig.fetchAndActivate().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val value = mFirebaseRemoteConfig.getBoolean(key)
+                onCompleteListener.onComplete(task, value)
+            } else {
+                val defaultValue = mFirebaseRemoteConfig.getBoolean(key, R.xml.remote_config_defaults)
+                onCompleteListener.onComplete(task, defaultValue)
+            }
+        }
+    }
+
+//Use in your activity:
+
+initRemoteConfig(key, OnCompleteListener<Boolean> { task, value ->
+            Log,d(TAG, value)
+        })
+```
+## Step 3: Message Service
+Create MessageService class:
+```kotlin
+class MessageService : FirebaseMessagingService() {
+
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        super.onMessageReceived(remoteMessage)
+
+        remoteMessage.notification?.let {
+            showNotification(it.title ?: "", it.body ?: "")
+        }
+    }
+
+    private fun showNotification(title: String, message: String) {
+        val intent = Intent(this, MainActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
+        val notificationBuilder = NotificationCompat.Builder(this, "default_channel_id")
+            .setContentTitle(title)
+            .setContentText(message)
+            .setSmallIcon(R.drawable.logo_app)
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel("default_channel_id", "Default Channel", NotificationManager.IMPORTANCE_DEFAULT)
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        notificationManager.notify(0, notificationBuilder.build())
+    }
+}
+```
+Add in your AndroidManifest.xml:
+```xml
+<application
+	...
+	<service
+		android:name=".MessageService"
+		android:exported="false">
+		<intent-filter>
+			<action android:name="com.google.firebase.MESSAGING_EVENT" />
+		</intent-filter>
+	</service>
+</application>
+```
 # Other extention:
 ```kotlin
 \\ Visible view
