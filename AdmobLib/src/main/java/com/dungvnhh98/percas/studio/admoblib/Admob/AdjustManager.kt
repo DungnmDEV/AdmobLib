@@ -26,7 +26,7 @@ object AdjustManager {
         application.registerActivityLifecycleCallbacks(AdjustLifecycleCallbacks())
     }
 
-    fun postRevenueAdjust(ad: AdValue, adUnit: String?) {
+    fun postRevenue(ad: AdValue, adUnit: String?) {
         val adjustAdRevenue = AdjustAdRevenue(AdjustConfig.AD_REVENUE_ADMOB)
         val rev = ad.valueMicros.toDouble() / 1000000
         adjustAdRevenue.setRevenue(rev, ad.currencyCode)

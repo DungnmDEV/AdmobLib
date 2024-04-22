@@ -9,12 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.dungvnhh98.percas.studio.admoblib.Admob.AdjustManager
 import com.dungvnhh98.percas.studio.admoblib.Admob.AdmobManager
 import com.dungvnhh98.percas.studio.admoblib.ViewControl.gone
 import com.dungvnhh98.percas.studio.admoblib.ViewControl.visible
 import com.dungvnhh98.percas.studio.admoblib.model.InterAdHolder
 import com.dungvnhh98.percas.studio.admoblib.model.NativeAdHolder
 import com.dungvnhh98.percas.studio.admoblib.model.RewardInterAdHolder
+import com.dungvnhh98.percas.studio.admoblib.rate.RateDialog
 import com.dungvnhh98.percas.studio.example.databinding.ActivityMainBinding
 import com.google.android.gms.ads.AdValue
 import com.google.android.gms.ads.MediaAspectRatio
@@ -116,6 +118,9 @@ class MainActivity : AppCompatActivity() {
         }
         binding.btnShowInterReward.setOnClickListener {
             showRewardInterAd(this, Ads.interRewardHolder)
+        }
+        binding.btnRate.setOnClickListener {
+            showRate(this)
         }
     }
 
@@ -444,9 +449,39 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onAdPaid(adValue: AdValue, adUnit: String) {
+                    AdjustManager.postRevenue(adValue, adUnit)
                 }
 
             })
+    }
+
+    fun showRate(activity: Activity){
+        val rateDialog = RateDialog(activity, object : RateDialog.RateDialogCallback{
+            override fun onShowRateDialog() {
+
+            }
+
+            override fun onDismissRateDialog() {
+            }
+
+            override fun onRateButtonClicked(numberStart: Int) {
+            }
+
+            override fun onMaybeLaterClicked() {
+            }
+
+            override fun onError(error: String) {
+
+            }
+
+        })
+        rateDialog.setTitle("Rate App")
+        rateDialog.setContent("We need your review to improve the application")
+        rateDialog.setTextButtonRate("Rate")
+        rateDialog.setTextButtonMaybeLater("Maybe Later!")
+        rateDialog.setPackageName(packageName)
+
+        rateDialog.showDialog()
     }
 
 }

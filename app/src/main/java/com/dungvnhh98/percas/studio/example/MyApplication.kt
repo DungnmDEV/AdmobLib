@@ -14,6 +14,6 @@ class MyApplication : Application() {
         super.onCreate()
         AdmobManager.initAdmob(this, timeOut = 10000, isTestAd = true, isEnableAd = true)
         AppResumeAdsManager.getInstance().init(/* application = */ this,/* appOnresmeAdsId = */ "")
-        AdjustManager.initAdjust(this, "", true)
+        AdjustManager.initAdjust(this, "", isTestAdjust = true)
     }
 }

@@ -108,7 +108,12 @@
         android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"
         app:layout_constraintTop_toBottomOf="@+id/btn_loadAndShowreward" />
-
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/btn_loadandshowinter"
+        android:text="Rate"
+        android:id="@+id/btn_rate"/>
 
     <View
         android:id="@+id/line"

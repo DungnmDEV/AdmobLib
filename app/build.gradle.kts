@@ -61,12 +61,13 @@ dependencies {
 
     implementation("com.google.android.gms:play-services-ads:23.0.0")
     implementation ("com.airbnb.android:lottie:6.4.0")
-    implementation(files("libs/adjust-lib.aar"))
+//    implementation(files("libs/adjust-lib.aar"))
 
-//    //adjust
-//    implementation ("com.adjust.sdk:adjust-android:4.33.5")
-//    implementation ("com.android.installreferrer:installreferrer:2.2")
-//    implementation ("com.adjust.sdk:adjust-android-webbridge:4.33.5")
-//    implementation ("com.google.android.gms:play-services-ads-identifier:18.0.1")
-//    implementation ("com.google.android.gms:play-services-appset:16.0.2")
+    //adjust
+    implementation ("com.adjust.sdk:adjust-android:4.33.5")
+    implementation ("com.android.installreferrer:installreferrer:2.2")
+    implementation ("com.adjust.sdk:adjust-android-webbridge:4.33.5")
+    implementation ("com.google.android.gms:play-services-ads-identifier:18.0.1")
+    implementation ("com.google.android.gms:play-services-appset:16.0.2")
+
 }
