@@ -1,6 +1,9 @@
 package com.dungvnhh98.percas.studio.example
 
 import android.app.Application
+import com.adjust.sdk.Adjust
+import com.adjust.sdk.AdjustConfig
+import com.adjust.sdk.LogLevel
 import com.dungvnhh98.percas.studio.admoblib.Admob.AdjustManager
 import com.dungvnhh98.percas.studio.admoblib.Admob.AdmobManager
 import com.dungvnhh98.percas.studio.admoblib.Admob.AppResumeAdsManager
@@ -13,5 +16,4 @@ class MyApplication : Application() {
         AppResumeAdsManager.getInstance().init(/* application = */ this,/* appOnresmeAdsId = */ "")
         AdjustManager.initAdjust(this, "", true)
     }
-
 }

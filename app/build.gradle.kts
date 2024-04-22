@@ -8,6 +8,10 @@ android {
     compileSdk = 34
 
     defaultConfig {
+        ndk {
+            abiFilters.clear()
+            abiFilters.addAll(mutableSetOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64"))
+        }
         applicationId = "com.dungvnhh98.percas.studio.example"
         minSdk = 24
         targetSdk = 34
@@ -41,6 +45,7 @@ android {
             enableSplit = false
         }
     }
+
 }
 
 dependencies {
@@ -56,11 +61,12 @@ dependencies {
 
     implementation("com.google.android.gms:play-services-ads:23.0.0")
     implementation ("com.airbnb.android:lottie:6.4.0")
+    implementation(files("libs/adjust-lib.aar"))
 
-    //adjust
-    implementation ("com.adjust.sdk:adjust-android:4.33.5")
-    implementation ("com.android.installreferrer:installreferrer:2.2")
-    implementation ("com.adjust.sdk:adjust-android-webbridge:4.33.5")
-    implementation ("com.google.android.gms:play-services-ads-identifier:18.0.1")
-    implementation ("com.google.android.gms:play-services-appset:16.0.2")
+//    //adjust
+//    implementation ("com.adjust.sdk:adjust-android:4.33.5")
+//    implementation ("com.android.installreferrer:installreferrer:2.2")
+//    implementation ("com.adjust.sdk:adjust-android-webbridge:4.33.5")
+//    implementation ("com.google.android.gms:play-services-ads-identifier:18.0.1")
+//    implementation ("com.google.android.gms:play-services-appset:16.0.2")
 }
