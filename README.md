@@ -631,6 +631,37 @@ Add in your AndroidManifest.xml:
 	</service>
 </application>
 ```
+# Rate App
+```kotlin
+ fun showRate(activity: Activity){
+        val rateDialog = RateDialog(activity, object : RateDialog.RateDialogCallback{
+            override fun onShowRateDialog() {
+
+            }
+
+            override fun onDismissRateDialog() {
+            }
+
+            override fun onRateButtonClicked(numberStart: Int) {
+            }
+
+            override fun onMaybeLaterClicked() {
+            }
+
+            override fun onError(error: String) {
+
+            }
+
+        })
+        rateDialog.setTitle("Rate App")
+        rateDialog.setContent("We need your review to improve the application")
+        rateDialog.setTextButtonRate("Rate")
+        rateDialog.setTextButtonMaybeLater("Maybe Later!")
+        rateDialog.setPackageName(packageName)
+
+        rateDialog.showDialog()
+    }
+```
 # Other extention:
 ```kotlin
 \\ Visible view
