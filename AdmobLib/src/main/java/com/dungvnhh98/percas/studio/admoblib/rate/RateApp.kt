@@ -9,7 +9,7 @@ import android.net.Uri
 import android.view.ViewGroup
 import com.dungvnhh98.percas.studio.admoblib.databinding.DialogRateAppBinding
 
-class RateDialog(private val activity: Activity,private val callBack: RateDialogCallback){
+class RateDialog(private val activity: Activity, private val callBack: RateDialogCallback) {
 
     private var title = ""
     private var content = ""
@@ -17,9 +17,10 @@ class RateDialog(private val activity: Activity,private val callBack: RateDialog
     private var maybeLater = ""
     private var rate = ""
 
-    fun setPackageName(packageName: String){
+    fun setPackageName(packageName: String) {
         this.packageName = packageName
     }
+
     fun setTitle(title: String) {
         this.title = title
     }
@@ -27,15 +28,17 @@ class RateDialog(private val activity: Activity,private val callBack: RateDialog
     fun setContent(content: String) {
         this.content = content
     }
+
     fun setTextButtonRate(rate: String) {
         this.rate = rate
     }
+
     fun setTextButtonMaybeLater(maybeLater: String) {
         this.maybeLater = maybeLater
     }
 
     fun showDialog() {
-        if(packageName.isBlank()){
+        if (packageName.isBlank()) {
             callBack.onError("Package Name is Null!")
             return
         }
@@ -47,16 +50,16 @@ class RateDialog(private val activity: Activity,private val callBack: RateDialog
         window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        if(title.isNotBlank()){
+        if (title.isNotBlank()) {
             binding.tvTitle.text = title
         }
-        if(content.isNotBlank()){
+        if (content.isNotBlank()) {
             binding.tvContent.text = content
         }
-        if(maybeLater.isNotBlank()){
+        if (maybeLater.isNotBlank()) {
             binding.btnMaybeLater.text = maybeLater
         }
-        if(rate.isNotBlank()){
+        if (rate.isNotBlank()) {
             binding.btnRate.text = rate
         }
 
@@ -67,7 +70,9 @@ class RateDialog(private val activity: Activity,private val callBack: RateDialog
         binding.btnRate.setOnClickListener {
             val numberRate = Math.round(binding.ratingBar.rating)
             callBack.onRateButtonClicked(numberRate)
-            openStoreForRating()
+            if (numberRate == 5) {
+                openStoreForRating()
+            }
             dialog.dismiss()
         }
 
@@ -87,7 +92,10 @@ class RateDialog(private val activity: Activity,private val callBack: RateDialog
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             activity.startActivity(intent)
         } catch (e: android.content.ActivityNotFoundException) {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName"))
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+            )
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             activity.startActivity(intent)
         }
