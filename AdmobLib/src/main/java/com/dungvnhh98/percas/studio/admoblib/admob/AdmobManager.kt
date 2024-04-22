@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package com.dungvnhh98.percas.studio.admoblib.Admob
+package com.dungvnhh98.percas.studio.admoblib.admob
 
 import android.annotation.SuppressLint
 import android.app.Activity

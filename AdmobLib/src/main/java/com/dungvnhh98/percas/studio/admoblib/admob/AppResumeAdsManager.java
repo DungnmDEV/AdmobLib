@@ -1,4 +1,4 @@
-package com.dungvnhh98.percas.studio.admoblib.Admob;
+package com.dungvnhh98.percas.studio.admoblib.admob;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -47,7 +47,7 @@ public class AppResumeAdsManager implements Application.ActivityLifecycleCallbac
     private AdRequest mAdRequest;
     private String adsOnResumeId;
     private long loadTime = 0;
-    private List<Class> disableResumeList;
+    private final List<Class> disableResumeList;
     private Dialog dialogFullScreen;
     private boolean isInitialized = false;
     public boolean isAppResumeEnabled =true;

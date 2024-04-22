@@ -1,4 +1,4 @@
-package com.dungvnhh98.percas.studio.admoblib.Admob
+package com.dungvnhh98.percas.studio.admoblib.admob
 
 import android.app.Activity
 import android.app.Application
@@ -20,7 +20,7 @@ object AdjustManager {
             AdjustConfig.ENVIRONMENT_PRODUCTION
         }
         val config = AdjustConfig(application, appToken, environment)
-        config.setLogLevel(LogLevel.WARN);
+        config.setLogLevel(LogLevel.WARN)
         Adjust.onCreate(config)
 
         application.registerActivityLifecycleCallbacks(AdjustLifecycleCallbacks())

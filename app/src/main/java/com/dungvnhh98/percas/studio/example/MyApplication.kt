@@ -1,12 +1,9 @@
 package com.dungvnhh98.percas.studio.example
 
 import android.app.Application
-import com.adjust.sdk.Adjust
-import com.adjust.sdk.AdjustConfig
-import com.adjust.sdk.LogLevel
-import com.dungvnhh98.percas.studio.admoblib.Admob.AdjustManager
-import com.dungvnhh98.percas.studio.admoblib.Admob.AdmobManager
-import com.dungvnhh98.percas.studio.admoblib.Admob.AppResumeAdsManager
+import com.dungvnhh98.percas.studio.admoblib.admob.AdjustManager
+import com.dungvnhh98.percas.studio.admoblib.admob.AdmobManager
+import com.dungvnhh98.percas.studio.admoblib.admob.AppResumeAdsManager
 
 
 class MyApplication : Application() {

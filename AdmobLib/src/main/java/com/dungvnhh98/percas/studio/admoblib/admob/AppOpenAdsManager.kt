@@ -1,4 +1,4 @@
-package com.dungvnhh98.percas.studio.admoblib.Admob
+package com.dungvnhh98.percas.studio.admoblib.admob
 
 import android.app.Activity
 import android.app.Dialog
