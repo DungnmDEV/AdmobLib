@@ -514,7 +514,7 @@ object AdmobManager {
                 val adView = activity.layoutInflater
                     .inflate(layoutNativeFormat, null) as NativeAdView
                 bindNativeAdView(nativeAd, adView, isNativeMedium)
-                shimmerFrameLayout!!.stopShimmer()
+                shimmerFrameLayout?.stopShimmer()
                 viewNativeAd.removeAllViews()
                 viewNativeAd.addView(adView)
                 adCallBack.onAdShowed()
@@ -524,7 +524,7 @@ object AdmobManager {
                 }
             }.withAdListener(object : AdListener() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
-                    shimmerFrameLayout!!.stopShimmer()
+                    shimmerFrameLayout?.stopShimmer()
                     viewNativeAd.removeAllViews()
                     nativeHolder.isLoading = false
                     adCallBack.onAdFailed(adError.message + "\nError Code Ads:\n" + adError.cause)
