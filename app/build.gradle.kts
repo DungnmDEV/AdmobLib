@@ -8,10 +8,6 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        ndk {
-            abiFilters.clear()
-            abiFilters.addAll(mutableSetOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64"))
-        }
         applicationId = "com.dungvnhh98.percas.studio.example"
         minSdk = 24
         targetSdk = 34
