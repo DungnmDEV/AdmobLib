@@ -449,7 +449,6 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onAdPaid(adValue: AdValue, adUnit: String) {
-                    AdjustManager.postRevenue(adValue, adUnit)
                 }
 
             })

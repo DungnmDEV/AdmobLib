@@ -228,6 +228,11 @@ object AdmobManager {
             Log.e(TAG, "Ads is Disable now!")
             return
         }
+        if (activity.isFinishing || activity.isDestroyed) {
+            Log.e(TAG, "Activity was destroy!")
+            adCallBack.onAdFailed("Activity was destroy!")
+            return
+        }
         if (!activity.isNetworkConnected()) {
             Log.e(TAG, "No Internet!")
             adCallBack.onAdFailed("No internet!")
