@@ -1,7 +1,6 @@
 package com.dungvnhh98.percas.studio.example
 
 import android.app.Application
-import com.dungvnhh98.percas.studio.admoblib.admob.AdjustManager
 import com.dungvnhh98.percas.studio.admoblib.admob.AdmobManager
 import com.dungvnhh98.percas.studio.admoblib.admob.AppResumeAdsManager
 

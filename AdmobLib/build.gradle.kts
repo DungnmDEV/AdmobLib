@@ -65,7 +65,6 @@ dependencies {
     implementation("com.facebook.shimmer:shimmer:0.5.0")
 
     implementation ("com.airbnb.android:lottie:6.4.0")
-    implementation(files("libs/adjust-lib.aar"))
 
     implementation ("com.github.ome450901:SimpleRatingBar:1.5.1")
 
